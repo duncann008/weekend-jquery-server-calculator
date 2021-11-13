@@ -2,25 +2,24 @@ const express = require('express');
 const bodyParser = require('body-parser')
 const app = express();
 const PORT = 5000;
+const mathHistory = [];
 
-// This must be added before GET & POST routes.
 app.use(bodyParser.urlencoded({extended:true}))
 
-// Serve up static files (HTML, CSS, Client JS)
 app.use(express.static('server/public'));
 
-// GET & POST Routes go here
-// app.get('/', (req, res) => {
-//   console.log('in GET /guessingGame');
-//   res.send(numberGuessList);
-// });
 
-// app.post('/guessingGame', (req, res) => {
-//   console.log('in POST /guessingGame');
-//   console.log('req.body', req.body);
-//   numberGuessList.push(req.body);
-//   res.sendStatus(201);
-// });
+app.get('/calculator', (req, res) => {
+  console.log('in GET /calculator');
+  res.send(mathHistory);
+});
+
+app.post('/calculator', (req, res) => {
+  console.log('in POST /calculator');
+  console.log('req.body', req.body);
+  mathHistory.push(req.body);
+  res.sendStatus(201);
+});
 
 
 app.listen(PORT, () => {
