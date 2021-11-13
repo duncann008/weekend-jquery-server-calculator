@@ -3,14 +3,24 @@ $(document).ready(onReady);
 function onReady()  {
     console.log('JS and JQ');
     renderMathHistory();
-    $('#equals-button').on('click', clickEquals);
     $('#addition-button').on('click', addButton);
+    $('#subtraction-button').on('click', subtractButton);
+    $('#multiplication-button').on('click', multiplyButton);
+    $('#division-button').on('click', divideButton);
+    $('#equals-button').on('click', clickEquals);
+    
 }
+
 
 
 function clickEquals()   {
     const newMathProblem = {
-        input: $('#problem-input').val()
+        first: $('#first-input').val(),
+        addOperator: addButton(),
+        subtractOperator: subtractButton(),
+        multiplyOperator: multiplyButton(),
+        divideOperator: divideButton(),
+        second: $('#second-input').val()
     }
     $.ajax({
         method: 'POST',
@@ -35,7 +45,7 @@ function renderMathHistory() {
     
         for (let problem of response) {
           $('#math-history').append(`
-            <li>${problem.input}</li>
+            <li>${problem.first} ${problem.addOperator} ${problem.second}</li>
           `)
         }
       }).catch((error) => {
@@ -43,13 +53,45 @@ function renderMathHistory() {
       });
 }
 
-// function doMath(numOne, op, numTwo) {
-//     let problem = `${numOne} ${op} ${numTwo}`
-//     return problem;
-// }
+function doMath(op, numOne, numTwo)   {
+    switch (op) {
+        case "+": 
+            return numOne + numTwo;
+        case "-":
+            return numOne - numTwo;
+        case "*":
+            return numOne * numTwo;
+        case "/":
+            return numOne / numTwo;
+        default: 
+            alert("Input the first number, select an operator, and then input the second number before hitting '='.");
+    }
+}
+
 
 function addButton()  {
-    let current = $('#problem-input').val();
-    current += '+';
-    $('#problem-input').val(current);
+    let addOp = $('#addition-button').text();
+    console.log(addOp);
+    return addOp;
 }
+
+function subtractButton()  {
+    let subtractOp = $('#subtraction-button').text();
+    console.log(subtractOp);
+    return subtractOp;
+}
+
+function multiplyButton()  {
+    let multiplyOp = $('#multiplication-button').text();
+    console.log(multiplyOp);
+    return multiplyOp;
+}
+
+function divideButton()  {
+    let divisionOp = $('#division-button').text();
+    console.log(divisionOp);
+    return divisionOp;
+}
+
+let test = $('#subtraction-button').text();
+console.log(test);
