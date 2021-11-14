@@ -16,25 +16,25 @@ function onReady()  {
 let operator;
 
 function addButton()  {
-    let operator = $(this).text();
+    operator = $(this).text();
     console.log(operator);
     return operator;
 }
 
 function subtractButton()  {
-    let operator = $(this).text();
+    operator = $(this).text();
     console.log(operator);
     return operator;
 }
 
 function multiplyButton()  {
-    let operator = $(this).text();
+    operator = $(this).text();
     console.log(operator);
     return operator;
 }
 
 function divideButton()  {
-    let operator = $(this).text();
+    operator = $(this).text();
     console.log(operator);
     return operator;
 }
@@ -42,7 +42,7 @@ function divideButton()  {
 function clickEquals()   {
     let newMathProblem = {
         first: $('#first-input').val(),
-        op: opTest,
+        op: operator,
         second: $('#second-input').val()
     }
     $.ajax({

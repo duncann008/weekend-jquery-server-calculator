@@ -21,6 +21,20 @@ app.post('/calculator', (req, res) => {
   res.sendStatus(201);
 });
 
+function doMath(numOne, op, numTwo)   {
+  switch (op) {
+      case "+": 
+          return numOne + numTwo;
+      case "-":
+          return numOne - numTwo;
+      case "*":
+          return numOne * numTwo;
+      case "/":
+          return numOne / numTwo;
+      default: 
+          alert("Input the first number, select an operator, and then input the second number before hitting '='.");
+  }
+}
 
 app.listen(PORT, () => {
   console.log ('Server is running on port', PORT)
