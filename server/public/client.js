@@ -3,23 +3,46 @@ $(document).ready(onReady);
 function onReady()  {
     console.log('JS and JQ');
     renderMathHistory();
+    $('#equals-button').on('click', clickEquals);
     $('#addition-button').on('click', addButton);
     $('#subtraction-button').on('click', subtractButton);
     $('#multiplication-button').on('click', multiplyButton);
     $('#division-button').on('click', divideButton);
-    $('#equals-button').on('click', clickEquals);
+    
     
 }
 
 
+let operator;
+
+function addButton()  {
+    let operator = $(this).text();
+    console.log(operator);
+    return operator;
+}
+
+function subtractButton()  {
+    let operator = $(this).text();
+    console.log(operator);
+    return operator;
+}
+
+function multiplyButton()  {
+    let operator = $(this).text();
+    console.log(operator);
+    return operator;
+}
+
+function divideButton()  {
+    let operator = $(this).text();
+    console.log(operator);
+    return operator;
+}
 
 function clickEquals()   {
-    const newMathProblem = {
+    let newMathProblem = {
         first: $('#first-input').val(),
-        addOperator: addButton(),
-        subtractOperator: subtractButton(),
-        multiplyOperator: multiplyButton(),
-        divideOperator: divideButton(),
+        op: opTest,
         second: $('#second-input').val()
     }
     $.ajax({
@@ -42,10 +65,9 @@ function renderMathHistory() {
         console.log('response', response);
         
         $('#math-history').empty();
-    
         for (let problem of response) {
           $('#math-history').append(`
-            <li>${problem.first} ${problem.addOperator} ${problem.second}</li>
+            <li>${problem.first} ${problem.op} ${problem.second}</li>
           `)
         }
       }).catch((error) => {
@@ -69,29 +91,35 @@ function doMath(op, numOne, numTwo)   {
 }
 
 
-function addButton()  {
-    let addOp = $('#addition-button').text();
-    console.log(addOp);
-    return addOp;
-}
 
-function subtractButton()  {
-    let subtractOp = $('#subtraction-button').text();
-    console.log(subtractOp);
-    return subtractOp;
-}
 
-function multiplyButton()  {
-    let multiplyOp = $('#multiplication-button').text();
-    console.log(multiplyOp);
-    return multiplyOp;
-}
-
-function divideButton()  {
-    let divisionOp = $('#division-button').text();
-    console.log(divisionOp);
-    return divisionOp;
-}
-
-let test = $('#subtraction-button').text();
-console.log(test);
+// function checkOperator()    {
+//     $.ajax({
+//         method: 'GET',
+//         url: '/calculator'
+//       }).then((response) => {
+//         for (let test of response) {
+//             if (test.addOperator === '+') {
+//                 operator = test.addOperator;
+//                 return operator;
+//             }
+//             else if (test.subtractOperator === '-') {
+//                 operator = test.subtractOperator;
+//                 return operator;
+//             }
+//             else if (test.multiplyOperator === '*') {
+//                 operator = test.multiplyOperator;
+//                 return operator;
+//             }
+//             else if (test.divideOperator === '/') {
+//                 operator = test.divideOperator;
+//                 return operator;
+//          }
+//             else {
+//                 console.log('woops');
+//             }
+//         }
+//       }).catch((error) => {
+//         console.log('error', error);
+//       });
+// }
