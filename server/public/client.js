@@ -8,7 +8,7 @@ function onReady()  {
     $('#subtraction-button').on('click', subtractButton);
     $('#multiplication-button').on('click', multiplyButton);
     $('#division-button').on('click', divideButton);
-    
+    $('#clear-button').on('click', clearButton);
     
 }
 
@@ -40,7 +40,7 @@ function divideButton()  {
 }
 
 function clickEquals()   {
-    let newMathProblem = {
+    const newMathProblem = {
         first: $('#first-input').val(),
         op: operator,
         second: $('#second-input').val()
@@ -54,6 +54,7 @@ function clickEquals()   {
         renderMathHistory();
     }).catch((error) => {
         console.log('it didnt work');
+        alert("Input the first number, select an operator, and then input the second number before hitting '='.");
     })
 }
 
@@ -63,63 +64,29 @@ function renderMathHistory() {
         url: '/calculator'
       }).then((response) => {
         console.log('response', response);
-        
+        response.reverse();
         $('#math-history').empty();
         for (let problem of response) {
           $('#math-history').append(`
-            <li>${problem.first} ${problem.op} ${problem.second}</li>
+            <li>${problem.first} ${problem.op} ${problem.second} = ${problem.result}</li>
           `)
         }
+        let theResult = result(response);
+        $('h2').append(theResult);
       }).catch((error) => {
         console.log('error', error);
+        
       });
 }
 
-function doMath(op, numOne, numTwo)   {
-    switch (op) {
-        case "+": 
-            return numOne + numTwo;
-        case "-":
-            return numOne - numTwo;
-        case "*":
-            return numOne * numTwo;
-        case "/":
-            return numOne / numTwo;
-        default: 
-            alert("Input the first number, select an operator, and then input the second number before hitting '='.");
-    }
+function result(results)   {
+    let currentResult = results[0].result;
+    return currentResult;
 }
 
+function clearButton()  {
+    $('#first-input').val('');
+    $('#second-input').val('');
+    $('h2').empty();
+}
 
-
-
-// function checkOperator()    {
-//     $.ajax({
-//         method: 'GET',
-//         url: '/calculator'
-//       }).then((response) => {
-//         for (let test of response) {
-//             if (test.addOperator === '+') {
-//                 operator = test.addOperator;
-//                 return operator;
-//             }
-//             else if (test.subtractOperator === '-') {
-//                 operator = test.subtractOperator;
-//                 return operator;
-//             }
-//             else if (test.multiplyOperator === '*') {
-//                 operator = test.multiplyOperator;
-//                 return operator;
-//             }
-//             else if (test.divideOperator === '/') {
-//                 operator = test.divideOperator;
-//                 return operator;
-//          }
-//             else {
-//                 console.log('woops');
-//             }
-//         }
-//       }).catch((error) => {
-//         console.log('error', error);
-//       });
-// }
